@@ -1,17 +1,11 @@
-const bodyParser = require('body-parser')
-const { Pool } = require('pg')
+const comandoParaCadastrarUsuarios = require ('../model/cadastroUsuarios.model.js')
+const banco = require ('../../config.js')
 
-export async function enviarCadastroUsuarioParaBanco(req, res) {
+async function enviarCadastroUsuarioParaBanco(req, res) {
 
     const {nome_completo, cpf, data_nascimento, email, senha, empresa} = req.body
 
     try{
-        const comandoParaCadastrarUsuarios = `
-            INSERT INTO usuarios_schema.usuarios (nome_completo, cpf, data_nascimento, email, senha, empresa)
-            VALUES ($1, $2, $3, $4, $5, $6)
-            RETURNING *;
-        `
-
         const values = [nome_completo, cpf, data_nascimento, email, senha, empresa]
         const resultado = await banco.query(comandoParaCadastrarUsuarios, values)
 
@@ -27,3 +21,5 @@ export async function enviarCadastroUsuarioParaBanco(req, res) {
         })
     }
 }
+
+module.exports = enviarCadastroUsuarioParaBanco
