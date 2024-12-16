@@ -16,9 +16,20 @@ async function enviarCadastroUsuarioParaBanco(req, res) {
         console.log('Sucesso!');
     } catch (error) {
         console.error('Erro ao inserir o usuário', error)
-        res.status(500).json({
-            message: 'Erro ao cadastrar usuário :('
-        })
+
+        // Erro de chave duplicada
+        if (error.code === '23505') {
+            res.status(409).json({
+                success: false,
+                message: 'Erro: CPF já cadastrado!',
+            });
+        } else {
+            // Outros erros
+            res.status(500).json({
+                success: false,
+                message: 'Erro ao cadastrar usuário.',
+            });
+        }
     }
 }
 
