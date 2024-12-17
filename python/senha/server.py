@@ -1,0 +1,12 @@
+from flask import Flask
+from services.enviarSenha_service import enviar_senha
+
+app = Flask(__name__)
+
+@app.route("/enviar-senha", methods=["POST"])
+def enviar_senha_por_email():
+    return enviar_senha()
+
+# Executa a aplicação
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=5003)
