@@ -1,6 +1,6 @@
 import psycopg2
-from python.senha.config import BANCO
-from senha.model.verificarEmail_model import comandoSQL
+from config import BANCO
+from model.verificarEmail_model import comandoSQL
 
 # Função para verificar se o email está no banco de dados
 def verificar_email(email):
