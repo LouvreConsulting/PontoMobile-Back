@@ -1,5 +1,5 @@
 import psycopg2
-from config import BANCO
+from config.config import BANCO
 from model.verificarEmail_model import comandoSQL
 
 # Função para verificar se o email está no banco de dados

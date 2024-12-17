@@ -4,7 +4,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from middleware.gerarSenha import gerar_senha
 from .verificarEmail_service import verificar_email
-from config import SMTP_SERVER, SMTP_PORTA, EMAIL_QUE_VAI_ENVIAR, SENHA_DO_EMAIL
+from config.config import SMTP_SERVER, SMTP_PORTA, EMAIL_QUE_VAI_ENVIAR, SENHA_DO_EMAIL
 
 # Endpoint para enviar a nova senha
 def enviar_senha():
