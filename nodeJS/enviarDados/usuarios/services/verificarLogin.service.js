@@ -1,30 +1,29 @@
 const bcrypt = require('bcrypt');
-const verificarCpfNoBanco = require('./verificarCPF.service');
 
 const verificarLogin = async (req, res) => {
-    const { cpf, senha } = req.body;
+    const { senha } = req.body;
 
-    if (!cpf || !senha) {
-        return res.status(400).json({ sucesso: false, mensagem: 'CPF e senha são obrigatórios' });
+    if (!senha) {
+        return res.status(400).json({ sucesso: false, mensagem: 'Senha é obrigatória!' });
     }
 
     try {
-        // Verificar se o CPF existe no banco
-        const usuario = await verificarCpfNoBanco(cpf);
+        // O usuário já foi verificado e está disponível no req.usuario
+        const usuario = req.usuario;
 
-        if (!usuario) {
-            return res.status(404).json({ sucesso: false, mensagem: 'CPF não encontrado' });
-        }
-
-        // Comparando a senha fornecida com o hash armazenado
+        // Comparar a senha fornecida com o hash armazenado
         const senhaValida = await bcrypt.compare(senha, usuario.senha);
 
         if (!senhaValida) {
-            return res.status(401).json({ sucesso: false, mensagem: 'Senha incorreta' });
+            return res.status(401).json({ sucesso: false, mensagem: 'Senha incorreta!' });
         }
 
-        // Retornando sucesso se as credenciais forem válidas
-        return res.status(200).json({ sucesso: true, mensagem: 'Login bem-sucedido', usuario: { cpf: usuario.cpf } });
+        // Retornar sucesso se as credenciais forem válidas
+        return res.status(200).json({
+            sucesso: true,
+            mensagem: 'Login bem-sucedido',
+            usuario: { cpf: usuario.cpf },
+        });
     } catch (error) {
         console.error('Erro ao verificar login:', error);
         return res.status(500).json({ sucesso: false, mensagem: 'Erro interno no servidor' });
