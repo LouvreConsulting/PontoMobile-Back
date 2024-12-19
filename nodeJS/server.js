@@ -1,6 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const controllerUsuario = require('./controller/usuarios.controller.js')
+const controllerUsuario = require('./usuarios/controller/usuarios.controller.js')
 
 const app = express()
 const porta = 3000
