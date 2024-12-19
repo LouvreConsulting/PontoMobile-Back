@@ -22,16 +22,24 @@ rota.post('/verificarCPF', async (req, res) => {
     }
 
     try {
-        const usuario = await verificarCpfNoBanco(cpf); // Verifica o CPF no banco
+        const usuario = await verificarCpfNoBanco(cpf); // Retorna o usuário do banco
+        
         if (!usuario) {
             return res.status(404).json({ sucesso: false, mensagem: 'CPF não encontrado' });
         }
 
-        return res.status(200).json({ sucesso: true, usuario }); // Retorna o usuário encontrado
+        // Retorna o usuário encontrado com as informações necessárias
+        return res.status(200).json({
+            sucesso: true,
+            usuario: {
+                nome_completo: usuario.nome_completo,
+                cpf: usuario.cpf,
+            },
+        });
     } catch (error) {
         console.error('Erro ao verificar CPF na rota:', error.message);
         res.status(500).json({ sucesso: false, mensagem: 'Erro ao verificar CPF' });
     }
-});
+})
 
 module.exports = rota
