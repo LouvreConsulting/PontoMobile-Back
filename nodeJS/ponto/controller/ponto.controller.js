@@ -5,19 +5,19 @@ const { obterUltimoPonto } = require('../services/buscarUltimoRegistro.service.j
 
 // Função para enviar o ponto ao banco de dados
 router.post('/enviar-ponto', async (req, res) => {
-    const { nome, cpf, timestamp } = req.body;
+    const { nome, cpf, latitude, longitude } = req.body
 
-    if (!nome || !cpf) {
-        return res.status(400).json({ message: 'Dados inválidos' });
+    if (!nome || !cpf || !latitude || !longitude) {
+        return res.status(400).json({ message: 'Dados inválidos! Nome, CPF, longitude e latitude são obrigatórios' })
     }
 
     try {
-        const resposta = await enviarPontoParaBanco(nome, cpf); // Chamando a service
-        return res.status(200).json(resposta); // Retornando a resposta da service
+        const resposta = await enviarPontoParaBanco(nome, cpf, latitude, longitude)
+        return res.status(200).json(resposta)
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: error.message })
     }
-});
+})
 
 // Rota para obter o último ponto registrado
 router.post('/ultimo-ponto/:cpf', async (req, res) => {
