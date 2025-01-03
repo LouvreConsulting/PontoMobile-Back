@@ -2,11 +2,14 @@ const { Pool } = require('pg')
 require('dotenv').config()
 
 const banco = new Pool({
-    user: 'myadmin',
-    host: 'localhost',
+    user: 'postgres',
+    host: 'summarily-spotless-yeti.data-1.use1.tembo.io',
     database: 'mypoint',
-    password: 'Louvre@2024',
-    port: '5432'
+    password: 'FcUJNaY6ZaSwWreO',
+    port: '5432',
+    ssl: { rejectUnauthorized: false },
+    idleTimeoutMillis: 0,
+    connectionTimeoutMillis: 0,
 })
 
 module.exports = banco
